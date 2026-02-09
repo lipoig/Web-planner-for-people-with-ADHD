@@ -126,8 +126,8 @@
 }
 
 .when-btn.active {
-  border-color: #f294f1;
-  background: #f294f1;
+  border-color: var(--color-gentle-blue);
+  background: var(--color-gentle-blue);
   color: white;
 }
 
@@ -143,7 +143,7 @@
 
 .btn-add-step {
   padding: var(--space-sm) var(--space-lg);
-  background: #f294f1;
+  background: var(--color-gentle-blue);
   color: white;
   border: none;
   border-radius: var(--radius-sm);
@@ -156,7 +156,7 @@
 }
 
 .btn-add-step:hover:not(:disabled) {
-  background: #e680df;
+  background: var(--color-gentle-blue-light);
 }
 
 .btn-add-step:disabled {
@@ -252,6 +252,11 @@
 
 .modal-actions .btn-primary {
   flex: 1;
+  background: var(--color-gentle-blue);
+}
+
+.modal-actions .btn-primary:hover:not(:disabled) {
+  background: var(--color-gentle-blue-light);
 }
 
 @media (max-width: 600px) {

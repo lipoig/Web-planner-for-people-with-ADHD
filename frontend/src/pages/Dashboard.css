@@ -91,14 +91,29 @@
   background: var(--color-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-gray);
   transition: all 0.3s ease;
   overflow: hidden;
+  animation: gentleGlow 3s ease-in-out infinite;
+}
+
+@keyframes gentleGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(211, 211, 211, 0.5),
+      0 0 40px rgba(211, 211, 211, 0.3);
+    border-color: var(--color-gray);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(168, 213, 226, 0.6),
+      0 0 60px rgba(168, 213, 226, 0.4);
+    border-color: var(--color-gentle-blue);
+  }
 }
 
 .task-card:hover {
-  border-color: var(--color-border);
-  animation: colorfulShadow 8s ease-in-out infinite;
+  border-color: var(--color-gentle-blue);
 }
 
 .task-main {
@@ -287,36 +302,8 @@
   padding: var(--space-2xl) var(--space-md);
   background: var(--color-surface);
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  animation: colorfulShadow 8s ease-in-out infinite;
-}
-
-@keyframes colorfulShadow {
-  0% {
-    box-shadow: 
-      0 10px 40px rgba(93, 164, 162, 0.3),
-      0 5px 20px rgba(93, 164, 162, 0.2);
-  }
-  25% {
-    box-shadow: 
-      0 10px 40px rgba(232, 116, 97, 0.3),
-      0 5px 20px rgba(232, 116, 97, 0.2);
-  }
-  50% {
-    box-shadow: 
-      0 10px 40px rgba(255, 193, 7, 0.3),
-      0 5px 20px rgba(255, 193, 7, 0.2);
-  }
-  75% {
-    box-shadow: 
-      0 10px 40px rgba(156, 100, 240, 0.3),
-      0 5px 20px rgba(156, 100, 240, 0.2);
-  }
-  100% {
-    box-shadow: 
-      0 10px 40px rgba(93, 164, 162, 0.3),
-      0 5px 20px rgba(93, 164, 162, 0.2);
-  }
+  border: 2px solid var(--color-gray);
+  animation: gentleGlow 3s ease-in-out infinite;
 }
 
 .empty-message {
@@ -375,7 +362,7 @@
   position: fixed;
   bottom: var(--space-lg);
   right: var(--space-lg);
-  background: #f294f1;
+  background: var(--color-gentle-blue);
   color: white;
   border: none;
   padding: 1.2rem 2rem;
@@ -393,9 +380,9 @@
 }
 
 .btn-add-task:hover {
-  background: #e680df;
+  background: var(--color-gentle-blue-light);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(242, 148, 241, 0.3);
+  box-shadow: 0 12px 40px rgba(168, 213, 226, 0.4);
 }
 
 .btn-add-task:active {
