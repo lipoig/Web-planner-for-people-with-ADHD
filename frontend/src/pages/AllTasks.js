@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { taskService } from '../services/api';
 import TaskModal from '../components/TaskModal';
 import ConfirmModal from '../components/ConfirmModal';
+import TimerModal from '../components/TimerModal';
 import './AllTasks.css';
 
 function AllTasks() {
@@ -260,6 +261,8 @@ function AllTasks() {
           onCancel={() => setConfirmDelete(null)}
         />
       )}
+
+      <TimerModal />
     </div>
   );
 }

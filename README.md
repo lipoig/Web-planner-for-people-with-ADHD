@@ -168,29 +168,3 @@ adhd-planner/
 4. **No Punishment**: No red alerts or guilt-inducing messages
 5. **Quick Wins**: Steps can be broken down for easier completion
 6. **Flexibility**: Easy to move tasks between "today" and "later"
-
-## Future Enhancements
-
-- Daily reset of "today" tasks at midnight
-- Task templates for recurring activities
-- Celebration animations for completed tasks
-- Weekly review (optional)
-- Voice input for task creation
-- Offline support with service workers
-
-## Contributing
-
-This project is designed with ADHD needs in mind. When contributing:
-- Keep UI simple and uncluttered
-- Avoid adding complexity
-- Test with screen readers
-- Consider cognitive load in all decisions
-- Maintain the supportive, pressure-free tone
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Acknowledgments
-
-Built with understanding and empathy for the ADHD experience. Special thanks to the ADHD community for their insights and feedback.

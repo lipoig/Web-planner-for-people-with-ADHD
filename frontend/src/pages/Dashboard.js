@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { taskService } from '../services/api';
 import TaskModal from '../components/TaskModal';
 import ConfirmModal from '../components/ConfirmModal';
+import TimerModal from '../components/TimerModal';
 import './Dashboard.css';
 
 function Dashboard() {
@@ -12,9 +13,16 @@ function Dashboard() {
   const [editingTask, setEditingTask] = useState(null);
   const [expandedTask, setExpandedTask] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [now, setNow] = useState(new Date());
 
   useEffect(() => {
     loadData();
+  }, []);
+
+  // Live clock — tick every second
+  useEffect(() => {
+    const tick = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(tick);
   }, []);
 
   const loadData = async () => {
@@ -127,11 +135,17 @@ function Dashboard() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            {new Date().toLocaleDateString('en-US', { 
+            {now.toLocaleDateString('en-US', { 
               weekday: 'long', 
               year: 'numeric', 
               month: 'long', 
               day: 'numeric' 
+            })}
+            {' · '}
+            {now.toLocaleTimeString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
             })}
           </motion.p>
         </header>
@@ -289,6 +303,8 @@ function Dashboard() {
           onCancel={() => setConfirmDelete(null)}
         />
       )}
+
+      <TimerModal />
     </div>
   );
 }
