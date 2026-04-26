@@ -43,20 +43,49 @@
   --font-body: 'DM Sans', sans-serif;
 }
 
+/* ── Dark theme overrides ── */
+[data-theme="dark"] {
+  --color-bg: #1C1F26;
+  --color-surface: #252830;
+  --color-primary: #4A9F9C;
+  --color-primary-light: #5ABFBB;
+  --color-accent: #E87461;
+  --color-accent-light: #C05545;
+  --color-text: #E8E5DF;
+  --color-text-light: #9A9794;
+  --color-border: #353840;
+  --color-success: #6BC990;
+  --color-low: #6FA8A7;
+  --color-medium: #C9A040;
+  --color-high: #D46455;
+  --color-gentle-blue: #7ABDD0;
+  --color-gentle-blue-light: #95CFE0;
+  --color-gray: #404550;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  background: var(--color-bg);
+  transition: background 0.3s ease;
+}
+
 body {
   font-family: var(--font-body);
-  background: white;
+  background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Reduce motion for users who prefer it */

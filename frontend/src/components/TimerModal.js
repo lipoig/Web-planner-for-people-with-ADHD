@@ -1,14 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TimerModal.css';
 
-function TimerModal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [minutes, setMinutes] = useState(25);
-  const [secondsLeft, setSecondsLeft] = useState(null); // null = not started
-  const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef(null);
+const SHAPES = [
+  { id: 'balloon', emoji: '🎈', label: 'Balloon' },
+  { id: 'star',    emoji: '⭐', label: 'Star'    },
+];
 
-  // Tick
+function TimerModal() {
+  const [isOpen, setIsOpen]         = useState(false);
+  const [minutes, setMinutes]       = useState(25);
+  const [secondsLeft, setSecondsLeft] = useState(null);   // null = not started
+  const [totalSeconds, setTotalSeconds] = useState(null);
+  const [isRunning, setIsRunning]   = useState(false);
+  const [shape, setShape]           = useState('balloon');
+  const intervalRef                 = useRef(null);
+
+  /* ── Tick ── */
   useEffect(() => {
     if (isRunning && secondsLeft > 0) {
       intervalRef.current = setInterval(() => {
@@ -27,6 +34,7 @@ function TimerModal() {
 
   const handleStart = () => {
     const total = minutes * 60;
+    setTotalSeconds(total);
     setSecondsLeft(total);
     setIsRunning(true);
   };
@@ -40,6 +48,7 @@ function TimerModal() {
     clearInterval(intervalRef.current);
     setIsRunning(false);
     setSecondsLeft(null);
+    setTotalSeconds(null);
   };
 
   const formatTime = (secs) => {
@@ -48,13 +57,20 @@ function TimerModal() {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
-  const isDone = secondsLeft === 0;
-  const isUrgent = secondsLeft !== null && secondsLeft <= 60 && secondsLeft > 0;
+  const isDone    = secondsLeft === 0;
+  const isUrgent  = secondsLeft !== null && secondsLeft <= 60 && secondsLeft > 0;
   const hasStarted = secondsLeft !== null;
 
+  /* Progress 0 → 1 as time elapses */
+  const progress = (hasStarted && totalSeconds > 0)
+    ? 1 - (secondsLeft / totalSeconds)
+    : 0;
+
+  const currentEmoji = SHAPES.find(s => s.id === shape)?.emoji ?? '🎈';
+
   const getDisplayClass = () => {
-    if (isDone) return 'timer-display done';
-    if (isUrgent) return 'timer-display urgent';
+    if (isDone)    return 'timer-display done';
+    if (isUrgent)  return 'timer-display urgent';
     return 'timer-display';
   };
 
@@ -68,15 +84,28 @@ function TimerModal() {
         aria-label="Open timer"
       >
         {isRunning ? (
-          <span className="timer-btn-label">
-            {formatTime(secondsLeft)}
-          </span>
-        ) : isDone ? (
-          '✓'
-        ) : (
-          '⏱'
-        )}
+          <span className="timer-btn-label">{formatTime(secondsLeft)}</span>
+        ) : isDone ? '✓' : '⏱'}
       </button>
+
+      {/* Floating shape — animates from button corner to screen center */}
+      {hasStarted && !isDone && (
+        <div
+          className="timer-float-obj"
+          style={{ '--progress': progress }}
+          aria-hidden="true"
+        >
+          {currentEmoji}
+        </div>
+      )}
+      {isDone && (
+        <div
+          className="timer-float-obj timer-float-done"
+          aria-hidden="true"
+        >
+          {currentEmoji}
+        </div>
+      )}
 
       {/* Modal */}
       {isOpen && (
@@ -94,6 +123,22 @@ function TimerModal() {
               >
                 ✕
               </button>
+            </div>
+
+            {/* Shape picker */}
+            <div className="timer-shape-picker">
+              {SHAPES.map(s => (
+                <button
+                  key={s.id}
+                  className={`timer-shape-btn ${shape === s.id ? 'active' : ''}`}
+                  onClick={() => setShape(s.id)}
+                  aria-label={`Use ${s.label}`}
+                  title={s.label}
+                >
+                  <span className="timer-shape-emoji">{s.emoji}</span>
+                  <span className="timer-shape-label">{s.label}</span>
+                </button>
+              ))}
             </div>
 
             {/* Countdown display */}
@@ -124,7 +169,8 @@ function TimerModal() {
                   value={minutes}
                   onChange={(e) => {
                     setMinutes(Number(e.target.value));
-                    setSecondsLeft(null); // reset display when slider moves
+                    setSecondsLeft(null);
+                    setTotalSeconds(null);
                   }}
                 />
                 <div className="timer-slider-ticks">

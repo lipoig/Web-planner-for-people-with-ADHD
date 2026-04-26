@@ -1,3 +1,4 @@
+/* ── Trigger button ── */
 .timer-btn {
   position: fixed;
   bottom: var(--space-lg);
@@ -6,7 +7,8 @@
   height: 56px;
   border-radius: 50%;
   border: none;
-  background: var(--color-surface);
+  background: var(--color-gentle-blue);
+  color: white;
   box-shadow: var(--shadow-md);
   cursor: pointer;
   display: flex;
@@ -15,30 +17,67 @@
   font-size: 1.5rem;
   transition: all 0.2s ease;
   z-index: 100;
-  border: 2px solid var(--color-border);
 }
 
 .timer-btn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary);
+  background: var(--color-gentle-blue-light);
+  box-shadow: 0 12px 40px rgba(168, 213, 226, 0.4);
 }
 
 .timer-btn.running {
-  border-color: var(--color-success);
-  background: rgba(95, 179, 129, 0.08);
+  background: var(--color-gentle-blue);
+  box-shadow: 0 4px 20px rgba(168, 213, 226, 0.5);
 }
 
 .timer-btn-label {
   font-size: 0.65rem;
   font-weight: 700;
-  color: var(--color-success);
+  color: white;
   font-family: var(--font-body);
   letter-spacing: 0.02em;
   line-height: 1;
 }
 
-/* Modal overlay */
+/* ── Floating object ── */
+/*
+  Interpolates position using CSS custom property --progress (0 → 1).
+  At progress=0: bottom of screen (near timer button row)
+  At progress=1: vertically centered, same horizontal column
+*/
+.timer-float-obj {
+  position: fixed;
+  /* Horizontally aligned with the timer button, stays fixed */
+  left: 28px;
+  /* Fly upward: bottom 28px → 50vh */
+  bottom: calc(28px + var(--progress, 0) * (50vh - 52px));
+  font-size: 1.8rem;
+  pointer-events: none;
+  z-index: 98;
+  transition: bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+  animation: floatBob 3s ease-in-out infinite;
+}
+
+.timer-float-done {
+  left: 28px;
+  bottom: calc(50vh - 24px);
+  font-size: 2.4rem;
+  animation: floatBob 3s ease-in-out infinite, donePop 0.4s cubic-bezier(0.2, 0.8, 0.4, 1.2);
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes donePop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Modal overlay ── */
 .timer-overlay {
   position: fixed;
   inset: 0;
@@ -65,11 +104,12 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Header ── */
 .timer-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .timer-modal-title {
@@ -100,7 +140,60 @@
   color: var(--color-text);
 }
 
-/* Countdown display */
+/* ── Shape picker ── */
+.timer-shape-picker {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.timer-shape-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-sm);
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.timer-shape-btn:hover {
+  border-color: var(--color-gentle-blue);
+  background: rgba(168, 213, 226, 0.08);
+}
+
+.timer-shape-btn.active {
+  border-color: var(--color-gentle-blue);
+  background: rgba(168, 213, 226, 0.15);
+}
+
+.timer-shape-emoji {
+  font-size: 1.6rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.timer-shape-btn.active .timer-shape-emoji {
+  transform: scale(1.2);
+}
+
+.timer-shape-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+}
+
+.timer-shape-btn.active .timer-shape-label {
+  color: var(--color-gentle-blue);
+}
+
+/* ── Countdown display ── */
 .timer-countdown {
   text-align: center;
   margin-bottom: var(--space-lg);
@@ -130,7 +223,7 @@
   margin-top: var(--space-xs);
 }
 
-/* Slider section */
+/* ── Slider ── */
 .timer-slider-section {
   margin-bottom: var(--space-lg);
 }
@@ -151,7 +244,7 @@
 .timer-slider-value {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-gentle-blue);
 }
 
 .timer-slider {
@@ -165,16 +258,17 @@
   cursor: pointer;
 }
 
+/* Thumb – uses gentle-blue (same as Add Task button) */
 .timer-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-gentle-blue);
   cursor: pointer;
-  border: 3px solid white;
-  box-shadow: 0 1px 6px rgba(45, 95, 93, 0.3);
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 1px 6px rgba(168, 213, 226, 0.5);
   transition: transform 0.15s ease;
 }
 
@@ -186,10 +280,10 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-gentle-blue);
   cursor: pointer;
-  border: 3px solid white;
-  box-shadow: 0 1px 6px rgba(45, 95, 93, 0.3);
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 1px 6px rgba(168, 213, 226, 0.5);
 }
 
 .timer-slider-ticks {
@@ -203,16 +297,17 @@
   color: var(--color-text-light);
 }
 
-/* Actions */
+/* ── Actions ── */
 .timer-actions {
   display: flex;
   gap: var(--space-sm);
 }
 
+/* Start button — same color as Add Task (gentle-blue) */
 .timer-btn-start {
   flex: 1;
   padding: var(--space-sm) var(--space-md);
-  background: var(--color-primary);
+  background: var(--color-gentle-blue);
   color: white;
   border: none;
   border-radius: var(--radius-md);
@@ -224,7 +319,7 @@
 }
 
 .timer-btn-start:hover {
-  background: var(--color-primary-light);
+  background: var(--color-gentle-blue-light);
   transform: translateY(-1px);
 }
 

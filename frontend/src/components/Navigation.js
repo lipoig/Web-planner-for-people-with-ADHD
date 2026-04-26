@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
@@ -6,22 +6,32 @@ function Navigation() {
   const navigate = useNavigate();
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
+
+  // Apply theme on mount and whenever isDark changes
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
 
   const handleLogout = (e) => {
-    // Prevent any default behavior
     e.preventDefault();
     e.stopPropagation();
-    
-    console.log('Logout clicked!'); // Debug message
-    
-    // Clear the token
     localStorage.removeItem('token');
-    
-    // Close menu
     setShowMenu(false);
-    
-    // Redirect to login
     window.location.href = '/';
+  };
+
+  const toggleTheme = (e) => {
+    e.stopPropagation();
+    setIsDark(prev => !prev);
   };
 
   const isActive = (path) => location.pathname === path;
@@ -50,8 +60,19 @@ function Navigation() {
         </div>
 
         <div className="nav-actions">
-          <button 
-            className="nav-menu-btn" 
+          {/* Theme toggle */}
+          <button
+            className="nav-theme-btn"
+            onClick={toggleTheme}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? '☀️' : '🌙'}
+          </button>
+
+          {/* Menu button */}
+          <button
+            className="nav-menu-btn"
             onClick={(e) => {
               e.stopPropagation();
               setShowMenu(!showMenu);
@@ -63,8 +84,8 @@ function Navigation() {
 
         {showMenu && (
           <div className="nav-dropdown">
-            <button 
-              className="dropdown-item logout" 
+            <button
+              className="dropdown-item logout"
               onClick={handleLogout}
               onMouseDown={handleLogout}
             >
@@ -75,8 +96,8 @@ function Navigation() {
       </div>
 
       {showMenu && (
-        <div 
-          className="nav-backdrop" 
+        <div
+          className="nav-backdrop"
           onClick={() => setShowMenu(false)}
         />
       )}

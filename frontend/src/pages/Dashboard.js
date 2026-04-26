@@ -19,9 +19,9 @@ function Dashboard() {
     loadData();
   }, []);
 
-  // Live clock — tick every second
+  // Live clock — tick every minute (no seconds shown)
   useEffect(() => {
-    const tick = setInterval(() => setNow(new Date()), 1000);
+    const tick = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(tick);
   }, []);
 
@@ -145,7 +145,6 @@ function Dashboard() {
             {now.toLocaleTimeString('en-US', {
               hour: '2-digit',
               minute: '2-digit',
-              second: '2-digit',
             })}
           </motion.p>
         </header>
