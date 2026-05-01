@@ -88,23 +88,18 @@ function TimerModal() {
         ) : isDone ? '✓' : '⏱'}
       </button>
 
-      {/* Floating shape — animates from button corner to screen center */}
-      {hasStarted && !isDone && (
-        <div
-          className="timer-float-obj"
-          style={{ '--progress': progress }}
-          aria-hidden="true"
-        >
-          {currentEmoji}
-        </div>
-      )}
-      {isDone && (
-        <div
-          className="timer-float-obj timer-float-done"
-          aria-hidden="true"
-        >
-          {currentEmoji}
-        </div>
+      {/* Vertical track line + travelling shape */}
+      {hasStarted && (
+        <>
+          <div className="timer-track" aria-hidden="true" />
+          <div
+            className={`timer-float-obj${isDone ? ' timer-float-done' : ''}`}
+            style={{ '--progress': isDone ? 1 : progress }}
+            aria-hidden="true"
+          >
+            {currentEmoji}
+          </div>
+        </>
       )}
 
       {/* Modal */}

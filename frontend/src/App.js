@@ -16,7 +16,7 @@ function PublicRoute({ children }) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/adhd-planner">
       <Routes>
         <Route
           path="/"

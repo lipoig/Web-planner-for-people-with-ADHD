@@ -1,15 +1,18 @@
 {
+  "homepage": "https://lipoig.github.io/adhd_planner",
   "name": "adhd-planner-frontend",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "axios": "^1.6.2",
+    "framer-motion": "^10.16.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "axios": "^1.6.2",
-    "framer-motion": "^10.16.16"
+    "react-router-dom": "^6.20.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -33,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "react-scripts": "^5.0.1"
   }
 }

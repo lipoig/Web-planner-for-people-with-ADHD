@@ -41,29 +41,62 @@
 
 /* ── Floating object ── */
 /*
-  Interpolates position using CSS custom property --progress (0 → 1).
-  At progress=0: bottom of screen (near timer button row)
-  At progress=1: vertically centered, same horizontal column
+  Vertical track line from button top to screen midpoint.
+  Balloon/star travels along it based on --progress (0 → 1).
+
+  Timer button: left: 32px, width: 56px → center X = 60px
+  Button top edge: bottom: 32px + 56px = 88px
+  Track top: 50vh
 */
+
+/* The stick / track line */
+.timer-track {
+  position: fixed;
+  /* Center under the timer button */
+  left: 59px;
+  /* Starts just above the button, ends at screen vertical center */
+  bottom: 88px;
+  height: calc(50vh - 88px);
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to top,
+    var(--color-gentle-blue) 0%,
+    rgba(168, 213, 226, 0.25) 100%
+  );
+  pointer-events: none;
+  z-index: 97;
+  animation: trackAppear 0.4s ease forwards;
+}
+
+@keyframes trackAppear {
+  from { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+  to   { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+}
+
+/* The balloon / star — travels along the track */
 .timer-float-obj {
   position: fixed;
-  /* Horizontally aligned with the timer button, stays fixed */
-  left: 28px;
-  /* Fly upward: bottom 28px → 50vh */
-  bottom: calc(28px + var(--progress, 0) * (50vh - 52px));
+  /*
+    Center the emoji over the track line.
+    Emoji is ~1.8rem wide; offset left by half to center on X=60px.
+    translateX(-50%) + left:60px keeps it centered regardless of font size.
+  */
+  left: 60px;
+  transform: translateX(-50%);
+  /* Fly from button top (88px) up to screen center */
+  bottom: calc(88px + var(--progress, 0) * (50vh - 88px));
   font-size: 1.8rem;
   pointer-events: none;
   z-index: 98;
   transition: bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+  filter: drop-shadow(0 2px 8px rgba(168, 213, 226, 0.5));
   animation: floatBob 3s ease-in-out infinite;
 }
 
 .timer-float-done {
-  left: 28px;
-  bottom: calc(50vh - 24px);
-  font-size: 2.4rem;
-  animation: floatBob 3s ease-in-out infinite, donePop 0.4s cubic-bezier(0.2, 0.8, 0.4, 1.2);
+  bottom: calc(50vh);
+  animation: floatBob 3s ease-in-out infinite, donePop 0.5s cubic-bezier(0.2, 0.8, 0.4, 1.2);
 }
 
 @keyframes floatBob {
