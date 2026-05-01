@@ -30,7 +30,6 @@ function AllTasks() {
 
   useEffect(() => {
     loadTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const handleToggleTask = async (taskId) => {
