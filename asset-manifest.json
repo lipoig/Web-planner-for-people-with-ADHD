@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/adhd_planner/static/css/main.cfbb3663.css",
-    "main.js": "/adhd_planner/static/js/main.7100c0ee.js",
-    "index.html": "/adhd_planner/index.html",
-    "main.cfbb3663.css.map": "/adhd_planner/static/css/main.cfbb3663.css.map",
-    "main.7100c0ee.js.map": "/adhd_planner/static/js/main.7100c0ee.js.map"
+    "main.css": "/Web-planner-for-people-with-ADHD/static/css/main.cfbb3663.css",
+    "main.js": "/Web-planner-for-people-with-ADHD/static/js/main.6da84856.js",
+    "index.html": "/Web-planner-for-people-with-ADHD/index.html",
+    "main.cfbb3663.css.map": "/Web-planner-for-people-with-ADHD/static/css/main.cfbb3663.css.map",
+    "main.6da84856.js.map": "/Web-planner-for-people-with-ADHD/static/js/main.6da84856.js.map"
   },
   "entrypoints": [
     "static/css/main.cfbb3663.css",
-    "static/js/main.7100c0ee.js"
+    "static/js/main.6da84856.js"
   ]
 }
