@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/adhd_planner/static/css/main.cfbb3663.css",
+    "main.js": "/adhd_planner/static/js/main.2aeaf088.js",
+    "index.html": "/adhd_planner/index.html",
+    "main.cfbb3663.css.map": "/adhd_planner/static/css/main.cfbb3663.css.map",
+    "main.2aeaf088.js.map": "/adhd_planner/static/js/main.2aeaf088.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cfbb3663.css",
+    "static/js/main.2aeaf088.js"
+  ]
+}
