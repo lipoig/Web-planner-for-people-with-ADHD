@@ -16,7 +16,8 @@ function PublicRoute({ children }) {
 
 function App() {
   return (
-    <BrowserRouter basename="/adhd-planner">
+    <BrowserRouter basename="/Web-planner-for-people-with-ADHD
+">
       <Routes>
         <Route
           path="/"
