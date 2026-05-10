@@ -9,7 +9,12 @@ const taskRoutes = require('./routes/tasks');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://web-planner-for-people-with-adhd.vercel.app/'  // add your Vercel URL
+  ]
+}));
 app.use(express.json());
 
 // Routes
