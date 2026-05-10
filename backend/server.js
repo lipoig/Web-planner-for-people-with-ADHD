@@ -9,29 +9,7 @@ const taskRoutes = require('./routes/tasks');
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
-
-    const allowed = [
-      // Local dev
-      'http://localhost:3000',
-      // Your production Vercel URL
-      'https://web-planner-for-people-with-adhd.vercel.app',
-    ];
-
-    // Allow ALL vercel.app preview URLs for your project
-    const isVercelPreview = /https:\/\/web-planner-for-people-with-adhd.*\.vercel\.app/.test(origin);
-
-    if (allowed.includes(origin) || isVercelPreview) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
+app.use(cors());
 app.options('*', cors());
 app.use(express.json());
 
